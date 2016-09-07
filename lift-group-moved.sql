@@ -1,9 +1,6 @@
 -- how many ppl moved during load window
 create schema if not exists ph;
-drop function if exists ph.lift_group_moved 
-    (lift_group varchar, window_start timestamp, window_end timestamp);
-
-create function ph.lift_group_moved (lift_group varchar, window_start timestamp, window_end timestamp)
+create or replace function ph.lift_group_moved (lift_group varchar, window_start timestamp, window_end timestamp)
 returns table (lift_group text, people double precision) as $$
 select c_group_name_fk, 
     sum( abs(start_floor_index - end_floor_index) -- floors travel'd
