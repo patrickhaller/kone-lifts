@@ -1,1 +1,17 @@
-add project description here
+KONE lifts run a linux-based controller with PostgreSQL as a back-end. 
+
+The data collected allows us to make more informed decisions regarding people flow 
+in our buildings, provided we have the right analytics. 
+
+
+SUPPORTED QUESTIONS:
+
+How many people did one of our lift groups move during a time window? Assuming
+body size as percentage of lift load, and mean distance travelled, we have:
+
+elink_stat=# select * from  lift_group_moved('Grp9', '2016-08-17 11:20:00', '2016-08-17 11:35:00');
+ lift_group | people
+------------+--------
+ Grp9       | 499.75
+(1 row)
+
