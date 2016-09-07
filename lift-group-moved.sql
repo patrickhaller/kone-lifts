@@ -1,5 +1,24 @@
 -- how many ppl moved during load window
-create schema if not exists ph;
+
+-- the following is really: create schema if not exists ph;
+-- BEGIN dinosaur createnx
+create or replace function _ph_do_func() returns void as
+$$
+begin
+	if not exists(
+		select schema_name
+		from information_schema.schemata
+		where schema_name = 'ph'
+	)
+	then
+		execute 'create schema pg';
+	end if;
+end
+$$ language plpgsql volatile;
+select _ph_do_func();
+drop function _ph_do_func();
+-- END dinosaur createnx
+
 create or replace function ph.lift_group_moved (lift_group varchar, window_start timestamp, window_end timestamp)
 returns table (lift_group text, people double precision) as $$
 select c_group_name_fk, 
